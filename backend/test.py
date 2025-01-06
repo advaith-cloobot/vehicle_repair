@@ -43,3 +43,10 @@
 #     }}
 #   ]
 # }}
+
+
+from Monolithic.utils.utils import process_possible_fix_response
+
+issue_string = "the make of the car is a TATA, the model of the car is a i20, the type of the car is of an internal combustion engine, the gear type of the car is automatic, the issues with the car are the brake lights are not working properly as they are flcikering on and off when used"
+
+print(process_possible_fix_response(issue_string))

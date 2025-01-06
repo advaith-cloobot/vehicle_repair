@@ -12,7 +12,7 @@ import jwt
 import base64
 
 
-from db_ops.db_ops import insert_vehicle_repair_info,insert_payment_invoice
+from Monolithic.db_ops.db_ops import insert_vehicle_repair_info,insert_payment_invoice
 
 def print_statement(*args):
     # logger = logging.getLogger(__name__)
@@ -97,14 +97,18 @@ def process_possible_fix_response(issue_string):
     ]
 
     gpt_resp, input_tokens, output_tokens, gpttype = process_gpt_response(GPT_4_32K, prompt_message_list, JSON_OBJ)
-    print_statement("gpt_resp :: ",gpt_resp)
+    print_statement("gpt_resp :: ",gpt_resp," :: ",type(gpt_resp))
     return gpt_resp
 
 
 
 
-def diagnose_and_get_possible_fixes(user_id, vehicle_make, vehicle_type, gear_type, issues):
-    issue_string = f"""the make of the car is a {vehicle_make}, the type of the car is {vehicle_type}, the gear type of the car is {gear_type}, the issues with the car are {issues}"""
+def diagnose_and_get_possible_fixes(user_id, vehicle_make, vehicle_model, vehicle_type, gear_type, issues):
+    if vehicle_type!= "electric":
+        issue_string = f"""the make of the car is a {vehicle_make}, the model of the car is a {vehicle_model}, the type of the car is {vehicle_type}, the gear type of the car is {gear_type}, the issues with the car are {issues}"""
+    else:
+        issue_string = f"""the make of the car is a {vehicle_make}, the model of the car is a {vehicle_model}, the type of the car is {vehicle_type}, the issues with the car are {issues}"""
+
     print_statement("issue_string :: ",issue_string)
     repair_json = process_possible_fix_response(issue_string)
     possible_fix_list = ", ".join([fix["possible_fix"] for fix in repair_json["possible_fixes"]])    
@@ -134,6 +138,7 @@ def get_payment_invoice_details(user_id, p_id):
         'bank':payment_invoice[0][PG_TABLE_PAYMENT_INVOICE_pi_bank],
         'mode_of_payment':payment_invoice[0][PG_TABLE_PAYMENT_INVOICE_pi_mode_of_payment],
     }
+    print_statement("payment_invoice_dict :: ",payment_invoice_dict)
     return payment_invoice_dict
 
 
