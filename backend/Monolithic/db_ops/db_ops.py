@@ -23,7 +23,6 @@ def insert_vehicle_repair_info(user_id, vehicle_make, vehicle_type, gear_type, i
 
 
 
-
 def insert_payment_invoice(user_id, vr_id, mobile_number, address, mode_of_payment, bank, bill_amount):
     rowDict = {
         pg_col_name_dict[PG_TABLE_PAYMENT_INVOICE][1]: user_id,

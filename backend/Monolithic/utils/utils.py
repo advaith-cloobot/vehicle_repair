@@ -1,15 +1,18 @@
 
 
 from Monolithic.constants.constants import *
-
+from Monolithic.constants.gpt_constants import *
 from Components.PostgreDBtools.postgres_utils import get_row_by_id,get_rows_by_col
-
+from Components.gpt_tools.gpt_utils import process_gpt_response
 import json
 from datetime import datetime,timedelta
 import uuid
 import hashlib
 import jwt
 import base64
+
+
+from db_ops.db_ops import insert_vehicle_repair_info,insert_payment_invoice
 
 def print_statement(*args):
     # logger = logging.getLogger(__name__)
@@ -71,3 +74,78 @@ def valid_user(token):
     except:
         print_statement("\n\n\nerror in jwt\n\n\n")
     return False, None, None
+
+
+def process_possible_fix_response(issue_string):
+    prompt_message_list = [
+        {
+            "role":GPT_SYS_ROLE,
+            "content":VEHICLE_REPAIR_SYSTEM_GUIDELINES
+        },
+        {
+            "role":GPT_USER_ROLE,
+            "content":VEHICLE_REPAIR_SAMPLE_INPUT
+        },
+        {
+            "role":GPT_ASST_ROLE,
+            "content":VEHICLE_REPAIR_ASSISTANT
+        },
+        {
+            "role":GPT_USER_ROLE,
+            "content":issue_string
+        }
+    ]
+
+    gpt_resp, input_tokens, output_tokens, gpttype = process_gpt_response(GPT_4_32K, prompt_message_list, JSON_OBJ)
+    print_statement("gpt_resp :: ",gpt_resp)
+    return gpt_resp
+
+
+
+
+def diagnose_and_get_possible_fixes(user_id, vehicle_make, vehicle_type, gear_type, issues):
+    issue_string = f"""the make of the car is a {vehicle_make}, the type of the car is {vehicle_type}, the gear type of the car is {gear_type}, the issues with the car are {issues}"""
+    print_statement("issue_string :: ",issue_string)
+    repair_json = process_possible_fix_response(issue_string)
+    possible_fix_list = ", ".join([fix["possible_fix"] for fix in repair_json["possible_fixes"]])    
+    print_statement("possible_fix_list :: ",possible_fix_list)
+    estimated_amount = sum([fix["possible_fix_cost"] for fix in repair_json["possible_fixes"]])
+    print_statement("estimated_amount :: ",estimated_amount)
+    status, vr_id = insert_vehicle_repair_info(user_id, vehicle_make, vehicle_type, gear_type, issues, possible_fix_list, estimated_amount)
+    return status, vr_id, possible_fix_list, estimated_amount
+
+def process_payment_invoice(user_id, vr_id, mobile_number, address, mode_of_payment, bank, bill_amount):
+    status, pi_id = insert_payment_invoice(user_id, vr_id, mobile_number, address, mode_of_payment, bank, bill_amount)
+    return status, pi_id
+
+
+def get_payment_invoice_details(user_id, p_id):
+    payment_invoice_dict = {}
+    user_name = get_row_by_id(PG_TABLE_IDS_USERS, pg_col_name_dict[PG_TABLE_IDS_USERS][0], user_id)[0][PG_TABLE_IDS_USERS_user_name]
+    payment_invoice = get_row_by_id(PG_TABLE_PAYMENT_INVOICE, pg_col_name_dict[PG_TABLE_PAYMENT_INVOICE][0], p_id)
+    vr_row = get_row_by_id(PG_TABLE_VEHICLE_REPAIR_INFO, pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][0], payment_invoice[0][PG_TABLE_PAYMENT_INVOICE_pi_vr_id])[0]
+    payment_invoice_dict = {
+        'user_name':user_name,
+        'vehicle_make':vr_row[PG_TABLE_VEHICLE_REPAIR_INFO_vr_vehicle_make],
+        'vehicle_type':vr_row[PG_TABLE_VEHICLE_REPAIR_INFO_vr_vehicle_type],
+        'issues':vr_row[PG_TABLE_VEHICLE_REPAIR_INFO_vr_vehicle_issues],
+        'possible_fixes':vr_row[PG_TABLE_VEHICLE_REPAIR_INFO_vr_possible_fixes].split(","),
+        'bill_amount':payment_invoice[0][PG_TABLE_PAYMENT_INVOICE_pi_bill_amount],
+        'bank':payment_invoice[0][PG_TABLE_PAYMENT_INVOICE_pi_bank],
+        'mode_of_payment':payment_invoice[0][PG_TABLE_PAYMENT_INVOICE_pi_mode_of_payment],
+    }
+    return payment_invoice_dict
+
+
+
+
+
+
+
+
+
+
+
+
+
+
