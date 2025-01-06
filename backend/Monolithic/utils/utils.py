@@ -20,6 +20,18 @@ def print_statement(*args):
     print(datetime.now(),args, flush=True)
 
 
+
+def check_login_user(user_email, user_password):
+    user_info = get_rows_by_col(PG_TABLE_IDS_USERS,opt_conds= " lower(" + pg_col_name_dict[PG_TABLE_IDS_USERS][3] + ") = '" + user_email.lower() + "' ")
+    if len(user_info):
+        row = user_info[0]
+        if(row[PG_TABLE_IDS_USERS_user_password] == user_password):
+            return True, row[PG_TABLE_IDS_USERS_user_id]
+    return False, None
+
+
+
+
 def get_jwt_token(payload):
     return jwt.encode( payload, JWT_SECRET, algorithm='HS256')
 

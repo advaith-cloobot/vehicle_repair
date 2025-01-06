@@ -5,7 +5,7 @@ import pickle
 import random 
 import sys
 # from Monolithic.postgres_utils import global_init_db,global_init_db_vector
-from Monolithic.utils.utils import print_statement
+from Monolithic.utils.utils import print_statement,check_login_user,get_token
 # from Monolithic.postgres_utils import global_init_db,global_init_db_vector
 import logging
 from logging import FileHandler
@@ -15,6 +15,9 @@ import datetime
 import traceback
 
 from datetime import datetime
+
+from Monolithic.db_ops.db_ops import insert_new_user
+
 app = Flask(__name__,template_folder='assets/html_templates')
 
 app.debug = True
@@ -38,8 +41,10 @@ def check_login():
         print_statement('In check_login :: ',request.json)
         user_email = request.json['user_email']
         user_password = request.json['user_password']
-        status,user_id = verify_login(user_email,user_password)
-        return {"status":status,"user_id":user_id}
+        status,user_id = check_login_user(user_email,user_password)
+        if status:
+            return get_token(user_email,user_password)
+        return {"status":False,"user_id":None}
     except Exception as e:
         print('Exception in check_login ::',e)
         return make_response(jsonify({'error':'Internal error'}), 500)
