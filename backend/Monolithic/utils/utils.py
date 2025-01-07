@@ -132,7 +132,7 @@ def diagnose_and_get_possible_fixes(user_id, vehicle_make, vehicle_model, vehicl
     print_statement("possible_fix_list :: ",possible_fix_list)
     estimated_amount = sum([fix["possible_fix_cost"] for fix in repair_json["possible_fixes"]])
     print_statement("estimated_amount :: ",estimated_amount)
-    status, vr_id = insert_vehicle_repair_info(user_id, vehicle_make, vehicle_type, gear_type, issues, possible_fix_list, estimated_amount)
+    status, vr_id = insert_vehicle_repair_info(user_id, vehicle_make,vehicle_model, vehicle_type, gear_type, issues, possible_fix_list, estimated_amount)
     return status, vr_id, possible_fix_list, estimated_amount
 
 def process_payment_invoice(user_id, vr_id, mobile_number, address, mode_of_payment, bank, bill_amount):
@@ -148,6 +148,7 @@ def get_payment_invoice_details(user_id, p_id):
     payment_invoice_dict = {
         'user_name':user_name,
         'vehicle_make':vr_row[PG_TABLE_VEHICLE_REPAIR_INFO_vr_vehicle_make],
+        'vehicle_model':vr_row[PG_TABLE_VEHICLE_REPAIR_INFO_vr_vehicle_model],
         'vehicle_type':vr_row[PG_TABLE_VEHICLE_REPAIR_INFO_vr_vehicle_type],
         'issues':vr_row[PG_TABLE_VEHICLE_REPAIR_INFO_vr_vehicle_issues],
         'possible_fixes':vr_row[PG_TABLE_VEHICLE_REPAIR_INFO_vr_possible_fixes].split(","),

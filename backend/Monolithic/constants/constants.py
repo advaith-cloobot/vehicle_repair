@@ -105,22 +105,24 @@ pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO] = {}
 pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][0] = 'vr_id'
 pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][1] = 'vr_user_id'
 pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][2] = 'vr_vehicle_make'
-pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][3] = 'vr_vehicle_type'
-pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][4] = 'vr_vehicle_gear_type'
-pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][5] = 'vr_vehicle_issues'
-pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][6] = 'vr_possible_fixes'
-pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][7] = 'vr_estimated_cost'
-pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][8] = 'status'
+pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][3] = 'vr_vehicle_model'
+pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][4] = 'vr_vehicle_type'
+pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][5] = 'vr_vehicle_gear_type'
+pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][6] = 'vr_vehicle_issues'
+pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][7] = 'vr_possible_fixes'
+pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][8] = 'vr_estimated_cost'
+pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][9] = 'status'
 
 PG_TABLE_VEHICLE_REPAIR_INFO_vr_id               = 0
 PG_TABLE_VEHICLE_REPAIR_INFO_vr_user_id          = 1
 PG_TABLE_VEHICLE_REPAIR_INFO_vr_vehicle_make     = 2
-PG_TABLE_VEHICLE_REPAIR_INFO_vr_vehicle_type     = 3
-PG_TABLE_VEHICLE_REPAIR_INFO_vr_vehicle_gear_type = 4
-PG_TABLE_VEHICLE_REPAIR_INFO_vr_vehicle_issues   = 5
-PG_TABLE_VEHICLE_REPAIR_INFO_vr_possible_fixes   = 6
-PG_TABLE_VEHICLE_REPAIR_INFO_vr_estimated_cost   = 7
-PG_TABLE_VEHICLE_REPAIR_INFO_status              = 8
+PG_TABLE_VEHICLE_REPAIR_INFO_vr_vehicle_model    = 3
+PG_TABLE_VEHICLE_REPAIR_INFO_vr_vehicle_type     = 4
+PG_TABLE_VEHICLE_REPAIR_INFO_vr_vehicle_gear_type = 5
+PG_TABLE_VEHICLE_REPAIR_INFO_vr_vehicle_issues   = 6
+PG_TABLE_VEHICLE_REPAIR_INFO_vr_possible_fixes   = 7
+PG_TABLE_VEHICLE_REPAIR_INFO_vr_estimated_cost   = 8
+PG_TABLE_VEHICLE_REPAIR_INFO_status              = 9
 
 
 

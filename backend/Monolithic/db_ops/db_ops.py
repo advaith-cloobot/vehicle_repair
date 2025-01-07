@@ -25,16 +25,17 @@ def insert_new_user(user_email,user_password,user_name):
 
 
 
-def insert_vehicle_repair_info(user_id, vehicle_make, vehicle_type, gear_type, issues, possible_fixes, estimated_cost):
+def insert_vehicle_repair_info(user_id, vehicle_make, vehicle_model, vehicle_type, gear_type, issues, possible_fixes, estimated_cost):
     rowDict = {
         pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][1]: user_id,
         pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][2]: vehicle_make,
-        pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][3]: vehicle_type,
-        pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][4]: gear_type,
-        pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][5]: issues,
-        pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][6]: possible_fixes,
-        pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][7]: estimated_cost,
-        pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][8]: 1  # status
+        pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][3]: vehicle_model,
+        pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][4]: vehicle_type,
+        pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][5]: gear_type,
+        pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][6]: issues,
+        pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][7]: possible_fixes,
+        pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][8]: estimated_cost,
+        pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][9]: 1  # status
     }
     status, vr_id = insert_new_row_return_id(
         PG_TABLE_VEHICLE_REPAIR_INFO,
@@ -42,7 +43,6 @@ def insert_vehicle_repair_info(user_id, vehicle_make, vehicle_type, gear_type, i
         pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][0]
     )
     return status, vr_id
-
 
 
 def insert_payment_invoice(user_id, vr_id, mobile_number, address, mode_of_payment, bank, bill_amount):
