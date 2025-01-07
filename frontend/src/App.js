@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Layout from './components/layout/layout'; // Parent with left nav
 import Login from './components/login/login';
 import Home from './components/home/home'; // Child of Layout
-
+import CarDetails from './components/car_details/car_details';
 function App() {
   return (
     <Router>
@@ -13,6 +13,7 @@ function App() {
         {/* Nesting Layout and Home */}
         <Route path="/layout/*" element={<Layout />}>
           <Route path="home" element={<Home />} />
+          <Route path="car_details" element={<CarDetails />} />
         </Route>
       </Routes>
     </Router>

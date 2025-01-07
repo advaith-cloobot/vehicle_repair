@@ -5,7 +5,7 @@ import pickle
 import random 
 import sys
 # from Monolithic.postgres_utils import global_init_db,global_init_db_vector
-from Monolithic.utils.utils import print_statement,check_login_user,get_token
+from Monolithic.utils.utils import print_statement,check_login_user,get_token,valid_user,diagnose_and_get_possible_fixes
 # from Monolithic.postgres_utils import global_init_db,global_init_db_vector
 import logging
 from logging import FileHandler
@@ -63,6 +63,29 @@ def sign_up_user():
     except Exception as e:
         print('Exception in sign_up_user ::',e)
         return make_response(jsonify({'error':'Internal error'}), 500)
+    
+
+@app.route("/diagnose_problem_and_get_fix",methods=['POST','OPTIONS'])
+def diagnose_problem_and_get_fix():
+    dict_ = request.data.decode("UTF-8")
+    print_statement("Request :: ",dict_)
+    mydata = None
+    try:        
+        mydata = json.loads(dict_)  
+        print_statement(" Json : ",mydata)     
+    except:
+        print_statement('Error in json parsing')
+        return {"data":False, "msg":"Error in parsing request"}
+    headers = request.headers
+    bearer = headers.get('Authorization')    
+    token = bearer.split()[1] 
+    status, user_id = valid_user(token)
+    print_statement("user_id :: ",user_id)
+    if status:
+        status, vr_id, possible_fix_list, estimated_amount= diagnose_and_get_possible_fixes(user_id,mydata['vehicle_make'],mydata['vehicle_model'],mydata['vehicle_type'],mydata['gear_type'],mydata['issues'])
+        return {"status":True, "possible_fix_list":possible_fix_list, "estimated_amount":estimated_amount, "vr_id":vr_id}
+    else:
+        return {"status":False, "msg":"Invalid User"}
     
 
 

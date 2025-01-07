@@ -128,11 +128,13 @@ def diagnose_and_get_possible_fixes(user_id, vehicle_make, vehicle_model, vehicl
 
     print_statement("issue_string :: ",issue_string)
     repair_json = process_possible_fix_response(issue_string)
-    possible_fix_list = ", ".join([fix["possible_fix"] for fix in repair_json["possible_fixes"]])    
+    possible_fix_list_string = ", ".join([fix["possible_fix"] for fix in repair_json["possible_fixes"]])   
+    possible_fix_list = [fix["possible_fix"] for fix in repair_json["possible_fixes"]] 
+    print_statement("possible_fix_list string :: ",possible_fix_list_string)
     print_statement("possible_fix_list :: ",possible_fix_list)
     estimated_amount = sum([fix["possible_fix_cost"] for fix in repair_json["possible_fixes"]])
     print_statement("estimated_amount :: ",estimated_amount)
-    status, vr_id = insert_vehicle_repair_info(user_id, vehicle_make,vehicle_model, vehicle_type, gear_type, issues, possible_fix_list, estimated_amount)
+    status, vr_id = insert_vehicle_repair_info(user_id, vehicle_make,vehicle_model, vehicle_type, gear_type, issues, possible_fix_list_string, estimated_amount)
     return status, vr_id, possible_fix_list, estimated_amount
 
 def process_payment_invoice(user_id, vr_id, mobile_number, address, mode_of_payment, bank, bill_amount):
