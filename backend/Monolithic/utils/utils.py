@@ -12,7 +12,7 @@ import jwt
 import base64
 
 
-from Monolithic.db_ops.db_ops import insert_vehicle_repair_info,insert_payment_invoice
+from Monolithic.db_ops.db_ops import insert_vehicle_repair_info,insert_payment_invoice,get_invoice_list_by_user_id
 
 def print_statement(*args):
     # logger = logging.getLogger(__name__)
@@ -125,6 +125,7 @@ def diagnose_and_get_possible_fixes(user_id, vehicle_make, vehicle_model, vehicl
         issue_string = f"""the make of the car is a {vehicle_make}, the model of the car is a {vehicle_model}, the type of the car is {vehicle_type}, the gear type of the car is {gear_type}, the issues with the car are {issues}"""
     else:
         issue_string = f"""the make of the car is a {vehicle_make}, the model of the car is a {vehicle_model}, the type of the car is {vehicle_type}, the issues with the car are {issues}"""
+        gear_type = "automatic(electric)"
 
     print_statement("issue_string :: ",issue_string)
     repair_json = process_possible_fix_response(issue_string)
@@ -142,10 +143,11 @@ def process_payment_invoice(user_id, vr_id, mobile_number, address, mode_of_paym
     return status, pi_id
 
 
-def get_payment_invoice_details(user_id, p_id):
+def fetch_payment_invoice_details(user_id, p_id):
     payment_invoice_dict = {}
     user_name = get_row_by_id(PG_TABLE_IDS_USERS, pg_col_name_dict[PG_TABLE_IDS_USERS][0], user_id)[0][PG_TABLE_IDS_USERS_user_name]
     payment_invoice = get_row_by_id(PG_TABLE_PAYMENT_INVOICE, pg_col_name_dict[PG_TABLE_PAYMENT_INVOICE][0], p_id)
+    print_statement("payment_invoice :: ",payment_invoice)
     vr_row = get_row_by_id(PG_TABLE_VEHICLE_REPAIR_INFO, pg_col_name_dict[PG_TABLE_VEHICLE_REPAIR_INFO][0], payment_invoice[0][PG_TABLE_PAYMENT_INVOICE_pi_vr_id])[0]
     payment_invoice_dict = {
         'user_name':user_name,
@@ -157,9 +159,19 @@ def get_payment_invoice_details(user_id, p_id):
         'bill_amount':payment_invoice[0][PG_TABLE_PAYMENT_INVOICE_pi_bill_amount],
         'bank':payment_invoice[0][PG_TABLE_PAYMENT_INVOICE_pi_bank],
         'mode_of_payment':payment_invoice[0][PG_TABLE_PAYMENT_INVOICE_pi_mode_of_payment],
+        'address':payment_invoice[0][PG_TABLE_PAYMENT_INVOICE_pi_address]
     }
     print_statement("payment_invoice_dict :: ",payment_invoice_dict)
     return payment_invoice_dict
+
+
+
+def fetch_invoice_list(user_id):
+    invoice_list = get_invoice_list_by_user_id(user_id)
+    print_statement("invoice_list :: ",invoice_list)
+    invoice_list = [{"pi_id": invoice["pi_id"], "invoice_number":"invoice -"+ str(index)} for index, invoice in enumerate(invoice_list)]
+    print_statement("invoice_list_edit :: ",invoice_list)
+    return invoice_list
 
 
 

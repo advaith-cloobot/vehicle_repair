@@ -66,3 +66,7 @@ def insert_payment_invoice(user_id, vr_id, mobile_number, address, mode_of_payme
         pg_col_name_dict[PG_TABLE_PAYMENT_INVOICE][0]
     )
     return status, pi_id
+
+
+def get_invoice_list_by_user_id(user_id):
+    return get_rows_by_col(PG_TABLE_PAYMENT_INVOICE,pg_col_name_dict[PG_TABLE_PAYMENT_INVOICE][1],user_id, order_by=pg_col_name_dict[PG_TABLE_PAYMENT_INVOICE][0]+ ' DESC')

@@ -95,3 +95,27 @@
     font-size: 18px;
     margin-top: 10px;
   }
+  
+  .payment-details {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .payment-details h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .payment-details .form-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .payment-details .form-group label {
+    margin-right: 10px;
+  }
+  
+  .payment-details .form-group span {
+    margin-left: 10px;
+  }

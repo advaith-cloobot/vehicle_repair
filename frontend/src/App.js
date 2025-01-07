@@ -4,6 +4,7 @@ import Layout from './components/layout/layout'; // Parent with left nav
 import Login from './components/login/login';
 import Home from './components/home/home'; // Child of Layout
 import CarDetails from './components/car_details/car_details';
+import Invoice from './components/invoice/invoice';
 function App() {
   return (
     <Router>
@@ -14,6 +15,7 @@ function App() {
         <Route path="/layout/*" element={<Layout />}>
           <Route path="home" element={<Home />} />
           <Route path="car_details" element={<CarDetails />} />
+          <Route path="invoice/:id" element={<Invoice />} />
         </Route>
       </Routes>
     </Router>

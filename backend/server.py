@@ -5,7 +5,7 @@ import pickle
 import random 
 import sys
 # from Monolithic.postgres_utils import global_init_db,global_init_db_vector
-from Monolithic.utils.utils import print_statement,check_login_user,get_token,valid_user,diagnose_and_get_possible_fixes
+from Monolithic.utils.utils import print_statement,check_login_user,get_token,valid_user,diagnose_and_get_possible_fixes,process_payment_invoice,fetch_payment_invoice_details,fetch_invoice_list
 # from Monolithic.postgres_utils import global_init_db,global_init_db_vector
 import logging
 from logging import FileHandler
@@ -84,6 +84,76 @@ def diagnose_problem_and_get_fix():
     if status:
         status, vr_id, possible_fix_list, estimated_amount= diagnose_and_get_possible_fixes(user_id,mydata['vehicle_make'],mydata['vehicle_model'],mydata['vehicle_type'],mydata['gear_type'],mydata['issues'])
         return {"status":True, "possible_fix_list":possible_fix_list, "estimated_amount":estimated_amount, "vr_id":vr_id}
+    else:
+        return {"status":False, "msg":"Invalid User"}
+    
+
+
+@app.route('/process_payment',methods=['POST'])
+def process_payment():
+    dict_ = request.data.decode("UTF-8")
+    print_statement("Request :: ",dict_)
+    mydata = None
+    try:        
+        mydata = json.loads(dict_)  
+        print_statement(" Json : ",mydata)     
+    except:
+        print_statement('Error in json parsing')
+        return {"data":False, "msg":"Error in parsing request"}
+    headers = request.headers
+    bearer = headers.get('Authorization')    
+    token = bearer.split()[1] 
+    status, user_id = valid_user(token)
+    print_statement("user_id :: ",user_id)
+    if status:
+        status, pi_id = process_payment_invoice(user_id,mydata['vr_id'],mydata['mobile_number'],mydata['address'],mydata['payment_mode'],mydata['bank_name'],mydata['bill_amount'])
+        return {"status":status, "pi_id":pi_id}
+    else:
+        return {"status":False, "msg":"Invalid User"}
+    
+
+@app.route('/get_payment_invoice_details',methods=['POST'])
+def get_payment_invoice_details():
+    dict_ = request.data.decode("UTF-8")
+    print_statement("Request :: ",dict_)
+    mydata = None
+    try:        
+        mydata = json.loads(dict_)  
+        print_statement(" Json : ",mydata)     
+    except:
+        print_statement('Error in json parsing')
+        return {"data":False, "msg":"Error in parsing request"}
+    headers = request.headers
+    bearer = headers.get('Authorization')    
+    token = bearer.split()[1] 
+    status, user_id = valid_user(token)
+    print_statement("user_id :: ",user_id)
+    if status:
+        payment_invoice_dict = fetch_payment_invoice_details(user_id,mydata['p_id'])
+        return {"status":True, "payment_invoice_dict":payment_invoice_dict}
+    
+
+@app.route("/get_invoice_list",methods=['POST'])
+def get_invoice_list():
+    dict_ = request.data.decode("UTF-8")
+    print_statement("Request :: ",dict_)
+    mydata = None
+    try:        
+        mydata = json.loads(dict_)  
+        print_statement(" Json : ",mydata)     
+    except:
+        print_statement('Error in json parsing')
+        return {"data":False, "msg":"Error in parsing request"}
+    headers = request.headers
+    bearer = headers.get('Authorization')    
+    token = bearer.split()[1] 
+    status, user_id = valid_user(token)
+    print_statement("user_id :: ",user_id)
+    if status:
+        # payment_invoice_dict = fetch_payment_invoice_details(user_id,mydata['pi_id'])
+        invoice_list = fetch_invoice_list(user_id)
+        print_statement("invoice_list :: ",invoice_list)
+        return {"status":True, "payment_invoice_list":invoice_list}
     else:
         return {"status":False, "msg":"Invalid User"}
     

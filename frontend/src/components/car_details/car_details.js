@@ -1,6 +1,7 @@
 import React , { useState,useEffect }  from "react";
 import { useNavigate } from "react-router-dom";
 import httpClient from "../../httpClient";
+// import { useNavigate } from "react-router-dom";
 import "./car_details.css";
 const CarDetails = () => {
   const [make, setMake] = useState("");
@@ -14,6 +15,15 @@ const CarDetails = () => {
   const [estimatedAmount, setEstimatedAmount] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPaymentDetails, setShowPaymentDetails] = useState(false);
+  const [showInvoiceButton, setShowInvoiceButton] = useState(false);
+  const [paymentMode, setPaymentMode] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [bankName, setBankName] = useState("");
+  const [address, setAddress] = useState("");
+  const [invoice_id, setInvoice_id] = useState("");
+  const navigate = useNavigate();
+
   const handleDiagnose = () => {
     setIsLoading(true);
     const data = {
@@ -45,7 +55,8 @@ const CarDetails = () => {
         console.log("Success");
       }
       else{
-        alert("Invalid Email or Password");
+        // alert("Invalid Email or Password");
+        console.log("Failed to genrate fixes");
       }
     })
     .catch((error) => {
@@ -53,9 +64,49 @@ const CarDetails = () => {
     }).finally(() => {
       setIsLoading(false);
     });
-    
-
   };
+
+  const handleConfirmPayment = () => {
+    
+    const data = {
+      vr_id: vrId,
+      payment_mode: paymentMode,
+      mobile_number: mobileNumber,
+      bank_name: bankName,
+      address: address,
+      bill_amount: estimatedAmount,
+      token: sessionStorage.getItem('token')
+    };
+    httpClient.post('/process_payment', data,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    }).then((response) => {
+      console.log(response.data)
+      console.log('response payment : ', response);
+      const data = response.data;
+      console.log("\n\ndata login :: ",data);
+      if (data.status) {
+        console.log("Success");
+        setInvoice_id(data.pi_id);
+        setShowInvoiceButton(true);
+      }
+      else{
+        // alert("Invalid Email or Password");
+        console.log("Failed to process payment");
+      }
+
+    }).catch((error) => {
+        console.log("error :: ",error)
+    });
+  };
+
+  function progress_to_invoice(){
+    console.log("Invoice : ",invoice_id);
+    navigate(`/layout/invoice/${invoice_id}`);
+  }
+
 
   return (
     <div className="car-details-container">
@@ -102,7 +153,7 @@ const CarDetails = () => {
       )}
 
       {isDisabled && (
-        <div className="diagnosis-result">
+          <div className="diagnosis-result">
           <h2>Possible Fixes:</h2>
           <ul>
             {possibleFixList.map((fix, index) => (
@@ -110,8 +161,42 @@ const CarDetails = () => {
             ))}
           </ul>
           <p>The Total estimated cost of the repair is: <span role="img" aria-label="rupee">₹</span>{estimatedAmount}</p>
-          <button>Proceed to Payment</button>
+          <button onClick={() => setShowPaymentDetails(true)}>Proceed to Payment</button>
         </div>
+      )}
+
+{showPaymentDetails && (
+        <div className="payment-details">
+          <h2>Enter Payment Details</h2>
+          <div className="form-group">
+            <label>Enter mode of payment:</label>
+            <select value={paymentMode} onChange={(e) => setPaymentMode(e.target.value)}>
+              <option value="">Select</option>
+              <option value="netbanking">Netbanking</option>
+              <option value="upi">UPI</option>
+              <option value="card">Card</option>
+            </select>
+            <span role="img" aria-label="money">💵</span>
+          </div>
+          <div className="form-group">
+            <label>Enter mobile number:</label>
+            <input type="text" value={mobileNumber} onChange={(e) => setMobileNumber(e.target.value)} />
+          </div>
+          <div className="form-group">
+            <label>Enter name of the bank used:</label>
+            <input type="text" value={bankName} onChange={(e) => setBankName(e.target.value)} />
+          </div>
+          <div className="form-group">
+            <label>Enter your address:</label>
+            <textarea value={address} onChange={(e) => setAddress(e.target.value)} />
+            <span role="img" aria-label="house">🏠</span>
+          </div>
+          <button onClick={handleConfirmPayment}>Confirm Payment</button>
+        </div>
+      )}
+
+      {showInvoiceButton && (
+        <button onClick={progress_to_invoice}>View Payment Invoice</button>
       )}
     </div>
   );

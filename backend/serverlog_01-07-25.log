@@ -85,3 +85,135 @@ DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): cloobot-openai-c
 DEBUG:urllib3.connectionpool:https://cloobot-openai-canadaeast.openai.azure.com:443 "POST /openai/deployments/Cloobot-ChatGPT4-32k-CanadaEast/chat/completions?api-version=2024-08-01-preview HTTP/1.1" 200 1542
 DEBUG:openai:message='OpenAI API response' path=https://cloobot-openai-canadaeast.openai.azure.com//openai/deployments/Cloobot-ChatGPT4-32k-CanadaEast/chat/completions?api-version=2024-08-01-preview processing_ms=None request_id=51889101-9bcc-4952-8c76-83473015b973 response_code=200
 INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 12:15:46] "POST /diagnose_problem_and_get_fix HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.30:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 13:58:54] "OPTIONS /diagnose_problem_and_get_fix HTTP/1.1" 200 -
+DEBUG:openai:message='Request to OpenAI API' method=post path=https://cloobot-openai-canadaeast.openai.azure.com//openai/deployments/Cloobot-ChatGPT4-32k-CanadaEast/chat/completions?api-version=2024-08-01-preview
+DEBUG:openai:api_version=2024-08-01-preview data='{"messages": [{"role": "system", "content": "\\n\\nObjective:\\nYou are an automotive diagnostic assistant. Users will provide information about their car\'s make, model, specifications (if available), and the issue they are facing. Your task is to diagnose the issue, suggest possible causes, recommend fixes, and estimate repair costs. Return the response in a structured JSON format.\\n\\nGuidelines:\\n    Understand the User\'s Input:\\n\\n    Car details: Make, model, year, fuel type, and transmission type.\\n    Problem: A brief description of the issue (e.g., \\"accelerator pedal is hard to press\\").\\n    Additional information: Any observations or symptoms provided by the user.\\n    Analyze the Problem:\\n\\n    Use your automotive knowledge to identify possible causes of the issue.\\n    Consider the car\'s age, type, and technology (e.g., throttle cable vs. drive-by-wire).\\n    Avoid overly technical jargon; keep the explanation user-friendly.\\n    Suggest Possible Fixes:\\n        - List each fix clearly, describing what action needs to be taken (e.g., \\"Clean the throttle body\\").\\n        - Provide an estimated cost for the fix, considering typical repair and part costs for the described issue.\\n        - Include a range for costs if appropriate.\\n\\n\\nOutput Format:\\nAlways return the response in this JSON format:\\n\\njson\\n{{\\n  \\"possible_fixes\\": [\\n    {{\\n      \\"possible_fix\\": \\"<Description of the suggested fix>\\",\\n      \\"possible_fix_cost\\": <Estimated cost of the fix in numerical value, e.g., 1500>\\n    }},\\n    {{\\n      \\"possible_fix\\": \\"<Description of another suggested fix>\\",\\n      \\"possible_fix_cost\\": <Estimated cost of this fix>\\n    }}\\n  ]\\n}}\\n"}, {"role": "user", "content": "\\nThe make of the car is a Maruti Suzuki, the model of the car is Swift, the type of the car is of an internal combustion engine, the gear type of the car is automatic, the issues with the car are the accelerator pedal has become very hard to press down compared to previously.\\n"}, {"role": "assistant", "content": "\\n{\\n  \\"possible_fixes\\": [\\n    {\\n      \\"possible_fix\\": \\"Inspect and clean the throttle body to remove carbon deposits.\\",\\n      \\"possible_fix_cost\\": 1500\\n    },\\n    {\\n      \\"possible_fix\\": \\"Inspect and lubricate or replace the throttle cable if it is frayed or dirty.\\",\\n      \\"possible_fix_cost\\": 2500\\n    },\\n    {\\n      \\"possible_fix\\": \\"Check and clean the accelerator pedal assembly, replacing bushings if necessary.\\",\\n      \\"possible_fix_cost\\": 2000\\n    },\\n    {\\n      \\"possible_fix\\": \\"Diagnose the electronic throttle system and replace the throttle position sensor (TPS) if needed.\\",\\n      \\"possible_fix_cost\\": 4000\\n    },\\n    {\\n      \\"possible_fix\\": \\"Perform a general inspection at a trusted service center to rule out other issues.\\",\\n      \\"possible_fix_cost\\": 1000\\n    }\\n  ]\\n}\\n"}, {"role": "user", "content": "the make of the car is a TATA, the model of the car is a I20, the type of the car is ICE, the gear type of the car is manual, the issues with the car are the brake lights are flickering on and off when in use"}], "temperature": 0.7, "max_tokens": 10000, "top_p": 0.95, "frequency_penalty": 0, "presence_penalty": 0, "stop": null}' message='Post details'
+DEBUG:urllib3.util.retry:Converted retries value: 2 -> Retry(total=2, connect=None, read=None, redirect=None, status=None)
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): cloobot-openai-canadaeast.openai.azure.com:443
+DEBUG:urllib3.connectionpool:https://cloobot-openai-canadaeast.openai.azure.com:443 "POST /openai/deployments/Cloobot-ChatGPT4-32k-CanadaEast/chat/completions?api-version=2024-08-01-preview HTTP/1.1" 200 1580
+DEBUG:openai:message='OpenAI API response' path=https://cloobot-openai-canadaeast.openai.azure.com//openai/deployments/Cloobot-ChatGPT4-32k-CanadaEast/chat/completions?api-version=2024-08-01-preview processing_ms=None request_id=3c845f5f-c201-44d8-a7cb-623370fd7011 response_code=200
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 13:59:03] "POST /diagnose_problem_and_get_fix HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 14:00:07] "OPTIONS /process_payment HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 14:00:07] "[35m[1mPOST /process_payment HTTP/1.1[0m" 500 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.30:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 14:02:42] "OPTIONS /process_payment HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 14:02:42] "POST /process_payment HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.30:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 15:30:35] "OPTIONS /diagnose_problem_and_get_fix HTTP/1.1" 200 -
+DEBUG:openai:message='Request to OpenAI API' method=post path=https://cloobot-openai-canadaeast.openai.azure.com//openai/deployments/Cloobot-ChatGPT4-32k-CanadaEast/chat/completions?api-version=2024-08-01-preview
+DEBUG:openai:api_version=2024-08-01-preview data='{"messages": [{"role": "system", "content": "\\n\\nObjective:\\nYou are an automotive diagnostic assistant. Users will provide information about their car\'s make, model, specifications (if available), and the issue they are facing. Your task is to diagnose the issue, suggest possible causes, recommend fixes, and estimate repair costs. Return the response in a structured JSON format.\\n\\nGuidelines:\\n    Understand the User\'s Input:\\n\\n    Car details: Make, model, year, fuel type, and transmission type.\\n    Problem: A brief description of the issue (e.g., \\"accelerator pedal is hard to press\\").\\n    Additional information: Any observations or symptoms provided by the user.\\n    Analyze the Problem:\\n\\n    Use your automotive knowledge to identify possible causes of the issue.\\n    Consider the car\'s age, type, and technology (e.g., throttle cable vs. drive-by-wire).\\n    Avoid overly technical jargon; keep the explanation user-friendly.\\n    Suggest Possible Fixes:\\n        - List each fix clearly, describing what action needs to be taken (e.g., \\"Clean the throttle body\\").\\n        - Provide an estimated cost for the fix, considering typical repair and part costs for the described issue.\\n        - Include a range for costs if appropriate.\\n\\n\\nOutput Format:\\nAlways return the response in this JSON format:\\n\\njson\\n{{\\n  \\"possible_fixes\\": [\\n    {{\\n      \\"possible_fix\\": \\"<Description of the suggested fix>\\",\\n      \\"possible_fix_cost\\": <Estimated cost of the fix in numerical value, e.g., 1500>\\n    }},\\n    {{\\n      \\"possible_fix\\": \\"<Description of another suggested fix>\\",\\n      \\"possible_fix_cost\\": <Estimated cost of this fix>\\n    }}\\n  ]\\n}}\\n"}, {"role": "user", "content": "\\nThe make of the car is a Maruti Suzuki, the model of the car is Swift, the type of the car is of an internal combustion engine, the gear type of the car is automatic, the issues with the car are the accelerator pedal has become very hard to press down compared to previously.\\n"}, {"role": "assistant", "content": "\\n{\\n  \\"possible_fixes\\": [\\n    {\\n      \\"possible_fix\\": \\"Inspect and clean the throttle body to remove carbon deposits.\\",\\n      \\"possible_fix_cost\\": 1500\\n    },\\n    {\\n      \\"possible_fix\\": \\"Inspect and lubricate or replace the throttle cable if it is frayed or dirty.\\",\\n      \\"possible_fix_cost\\": 2500\\n    },\\n    {\\n      \\"possible_fix\\": \\"Check and clean the accelerator pedal assembly, replacing bushings if necessary.\\",\\n      \\"possible_fix_cost\\": 2000\\n    },\\n    {\\n      \\"possible_fix\\": \\"Diagnose the electronic throttle system and replace the throttle position sensor (TPS) if needed.\\",\\n      \\"possible_fix_cost\\": 4000\\n    },\\n    {\\n      \\"possible_fix\\": \\"Perform a general inspection at a trusted service center to rule out other issues.\\",\\n      \\"possible_fix_cost\\": 1000\\n    }\\n  ]\\n}\\n"}, {"role": "user", "content": "the make of the car is a Hyundai, the model of the car is a Verna, the type of the car is electric, the issues with the car are the left headlight is not working"}], "temperature": 0.7, "max_tokens": 10000, "top_p": 0.95, "frequency_penalty": 0, "presence_penalty": 0, "stop": null}' message='Post details'
+DEBUG:urllib3.util.retry:Converted retries value: 2 -> Retry(total=2, connect=None, read=None, redirect=None, status=None)
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): cloobot-openai-canadaeast.openai.azure.com:443
+DEBUG:urllib3.connectionpool:https://cloobot-openai-canadaeast.openai.azure.com:443 "POST /openai/deployments/Cloobot-ChatGPT4-32k-CanadaEast/chat/completions?api-version=2024-08-01-preview HTTP/1.1" 200 1472
+DEBUG:openai:message='OpenAI API response' path=https://cloobot-openai-canadaeast.openai.azure.com//openai/deployments/Cloobot-ChatGPT4-32k-CanadaEast/chat/completions?api-version=2024-08-01-preview processing_ms=None request_id=46628908-301a-4b64-b291-9cf5bfcf57c3 response_code=200
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 15:30:42] "POST /diagnose_problem_and_get_fix HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 15:31:19] "OPTIONS /process_payment HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 15:31:19] "POST /process_payment HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 15:40:16] "OPTIONS /get_payment_invoice_details HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 15:40:16] "OPTIONS /get_payment_invoice_details HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 15:40:16] "[35m[1mPOST /get_payment_invoice_details HTTP/1.1[0m" 500 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 15:40:16] "[35m[1mPOST /get_payment_invoice_details HTTP/1.1[0m" 500 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:08:22] "[33mOPTIONS /get_payment_invoice_list HTTP/1.1[0m" 404 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.30:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:09:33] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:09:33] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:09:33] "[31m[1mGET /get_invoice_list HTTP/1.1[0m" 405 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:09:33] "[31m[1mGET /get_invoice_list HTTP/1.1[0m" 405 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:10:22] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:10:22] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:10:22] "[35m[1mPOST /get_invoice_list HTTP/1.1[0m" 500 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:10:22] "[35m[1mPOST /get_invoice_list HTTP/1.1[0m" 500 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:11:12] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:11:12] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:11:12] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:11:12] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:11:22] "OPTIONS /get_payment_invoice_details HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:11:22] "OPTIONS /get_payment_invoice_details HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:11:22] "[35m[1mPOST /get_payment_invoice_details HTTP/1.1[0m" 500 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:11:22] "[35m[1mPOST /get_payment_invoice_details HTTP/1.1[0m" 500 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:11:35] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:11:35] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:11:35] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:11:35] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:14:08] "OPTIONS /diagnose_problem_and_get_fix HTTP/1.1" 200 -
+DEBUG:openai:message='Request to OpenAI API' method=post path=https://cloobot-openai-canadaeast.openai.azure.com//openai/deployments/Cloobot-ChatGPT4-32k-CanadaEast/chat/completions?api-version=2024-08-01-preview
+DEBUG:openai:api_version=2024-08-01-preview data='{"messages": [{"role": "system", "content": "\\n\\nObjective:\\nYou are an automotive diagnostic assistant. Users will provide information about their car\'s make, model, specifications (if available), and the issue they are facing. Your task is to diagnose the issue, suggest possible causes, recommend fixes, and estimate repair costs. Return the response in a structured JSON format.\\n\\nGuidelines:\\n    Understand the User\'s Input:\\n\\n    Car details: Make, model, year, fuel type, and transmission type.\\n    Problem: A brief description of the issue (e.g., \\"accelerator pedal is hard to press\\").\\n    Additional information: Any observations or symptoms provided by the user.\\n    Analyze the Problem:\\n\\n    Use your automotive knowledge to identify possible causes of the issue.\\n    Consider the car\'s age, type, and technology (e.g., throttle cable vs. drive-by-wire).\\n    Avoid overly technical jargon; keep the explanation user-friendly.\\n    Suggest Possible Fixes:\\n        - List each fix clearly, describing what action needs to be taken (e.g., \\"Clean the throttle body\\").\\n        - Provide an estimated cost for the fix, considering typical repair and part costs for the described issue.\\n        - Include a range for costs if appropriate.\\n\\n\\nOutput Format:\\nAlways return the response in this JSON format:\\n\\njson\\n{{\\n  \\"possible_fixes\\": [\\n    {{\\n      \\"possible_fix\\": \\"<Description of the suggested fix>\\",\\n      \\"possible_fix_cost\\": <Estimated cost of the fix in numerical value, e.g., 1500>\\n    }},\\n    {{\\n      \\"possible_fix\\": \\"<Description of another suggested fix>\\",\\n      \\"possible_fix_cost\\": <Estimated cost of this fix>\\n    }}\\n  ]\\n}}\\n"}, {"role": "user", "content": "\\nThe make of the car is a Maruti Suzuki, the model of the car is Swift, the type of the car is of an internal combustion engine, the gear type of the car is automatic, the issues with the car are the accelerator pedal has become very hard to press down compared to previously.\\n"}, {"role": "assistant", "content": "\\n{\\n  \\"possible_fixes\\": [\\n    {\\n      \\"possible_fix\\": \\"Inspect and clean the throttle body to remove carbon deposits.\\",\\n      \\"possible_fix_cost\\": 1500\\n    },\\n    {\\n      \\"possible_fix\\": \\"Inspect and lubricate or replace the throttle cable if it is frayed or dirty.\\",\\n      \\"possible_fix_cost\\": 2500\\n    },\\n    {\\n      \\"possible_fix\\": \\"Check and clean the accelerator pedal assembly, replacing bushings if necessary.\\",\\n      \\"possible_fix_cost\\": 2000\\n    },\\n    {\\n      \\"possible_fix\\": \\"Diagnose the electronic throttle system and replace the throttle position sensor (TPS) if needed.\\",\\n      \\"possible_fix_cost\\": 4000\\n    },\\n    {\\n      \\"possible_fix\\": \\"Perform a general inspection at a trusted service center to rule out other issues.\\",\\n      \\"possible_fix_cost\\": 1000\\n    }\\n  ]\\n}\\n"}, {"role": "user", "content": "the make of the car is a TATA, the model of the car is a I20, the type of the car is ICE, the gear type of the car is automatic, the issues with the car are Brake pedal is very hard to press compared to previously"}], "temperature": 0.7, "max_tokens": 10000, "top_p": 0.95, "frequency_penalty": 0, "presence_penalty": 0, "stop": null}' message='Post details'
+DEBUG:urllib3.util.retry:Converted retries value: 2 -> Retry(total=2, connect=None, read=None, redirect=None, status=None)
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): cloobot-openai-canadaeast.openai.azure.com:443
+DEBUG:urllib3.connectionpool:https://cloobot-openai-canadaeast.openai.azure.com:443 "POST /openai/deployments/Cloobot-ChatGPT4-32k-CanadaEast/chat/completions?api-version=2024-08-01-preview HTTP/1.1" 200 1631
+DEBUG:openai:message='OpenAI API response' path=https://cloobot-openai-canadaeast.openai.azure.com//openai/deployments/Cloobot-ChatGPT4-32k-CanadaEast/chat/completions?api-version=2024-08-01-preview processing_ms=None request_id=d556e3a4-a150-4a2b-be79-ae9c5b4e45b4 response_code=200
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:14:17] "POST /diagnose_problem_and_get_fix HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:15:06] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:15:06] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:15:06] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:15:06] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:15:33] "OPTIONS /get_payment_invoice_details HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:15:33] "OPTIONS /get_payment_invoice_details HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:15:34] "[35m[1mPOST /get_payment_invoice_details HTTP/1.1[0m" 500 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:15:34] "[35m[1mPOST /get_payment_invoice_details HTTP/1.1[0m" 500 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:17:27] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:17:27] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:17:27] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:17:27] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:19:28] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:19:28] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:19:28] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:19:28] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:20:09] "OPTIONS /get_payment_invoice_details HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:20:09] "OPTIONS /get_payment_invoice_details HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:20:09] "[35m[1mPOST /get_payment_invoice_details HTTP/1.1[0m" 500 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:20:09] "[35m[1mPOST /get_payment_invoice_details HTTP/1.1[0m" 500 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:22:16] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:22:16] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:22:16] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:22:16] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:25:06] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:25:06] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:25:06] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:25:06] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:26:23] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:26:23] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:26:23] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:26:23] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:26:25] "OPTIONS /get_payment_invoice_details HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:26:25] "OPTIONS /get_payment_invoice_details HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:26:25] "[35m[1mPOST /get_payment_invoice_details HTTP/1.1[0m" 500 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:26:25] "[35m[1mPOST /get_payment_invoice_details HTTP/1.1[0m" 500 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:29:17] "OPTIONS /get_payment_invoice_details HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:29:18] "OPTIONS /get_payment_invoice_details HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:29:18] "[35m[1mPOST /get_payment_invoice_details HTTP/1.1[0m" 500 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:29:18] "[35m[1mPOST /get_payment_invoice_details HTTP/1.1[0m" 500 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:29:23] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:29:23] "OPTIONS /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:29:23] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:29:23] "POST /get_invoice_list HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:30:25] "OPTIONS /get_payment_invoice_details HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:30:25] "OPTIONS /get_payment_invoice_details HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:30:25] "[35m[1mPOST /get_payment_invoice_details HTTP/1.1[0m" 500 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:30:25] "[35m[1mPOST /get_payment_invoice_details HTTP/1.1[0m" 500 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.30:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:32:59] "OPTIONS /get_payment_invoice_details HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:32:59] "OPTIONS /get_payment_invoice_details HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:32:59] "POST /get_payment_invoice_details HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.30 - - [07/Jan/2025 16:32:59] "POST /get_payment_invoice_details HTTP/1.1" 200 -
