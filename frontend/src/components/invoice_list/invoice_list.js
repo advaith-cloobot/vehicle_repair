@@ -59,7 +59,8 @@ const InvoiceList = () => {
             className="invoice-button"
             onClick={() => handleInvoiceClick(invoice.pi_id)}
           >
-            Invoice #{index}
+            <span role="img" aria-label="document" className="document-icon">📄</span>
+            Invoice #{index + 1}
           </button>
         ))}
       </div>

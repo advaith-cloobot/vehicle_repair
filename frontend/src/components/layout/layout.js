@@ -22,10 +22,10 @@ const Layout = () => {
     <div className="layout-container">
       <nav className="left-nav">
         <ul>
-        <li><a href="#" onClick={() => navigate("/layout/home")}>Home</a></li>
-          <li><a href="#" onClick={() => navigate("/layout/car_details")}>Enter Car Details</a></li>
-          <li><a href="#"onClick={() => navigate("/layout/list_invoice")} >List of Invoices</a></li>
-          <li><a href="#"onClick={() => logout()}>Log Out</a></li>       
+        <li><a href="#" onClick={() => navigate("/layout/home")}><span role="img" aria-label="home" className="icon">🏠</span> Home</a></li>
+          <li><a href="#" onClick={() => navigate("/layout/car_details")}><span role="img" aria-label="car" className="icon">🚗</span> Enter Car Details</a></li>
+          <li><a href="#" onClick={() => navigate("/layout/list_invoice")}><span role="img" aria-label="document" className="icon">📄</span> List of Invoices</a></li>
+          <li><a href="#" onClick={() => logout()}><span role="img" aria-label="logout" className="icon">❌</span> Log Out</a></li>      
         </ul>
       </nav>
       <main className="content-area">
