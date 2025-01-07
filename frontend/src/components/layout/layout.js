@@ -12,6 +12,11 @@ const Layout = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  function logout(){
+    sessionStorage.clear();
+    navigate("/");
+  }
+
 
   return (
     <div className="layout-container">
@@ -20,7 +25,7 @@ const Layout = () => {
         <li><a href="#" onClick={() => navigate("/layout/home")}>Home</a></li>
           <li><a href="#" onClick={() => navigate("/layout/car_details")}>Enter Car Details</a></li>
           <li><a href="#"onClick={() => navigate("/layout/list_invoice")} >List of Invoices</a></li>
-          <li><a href="#">About Us</a></li>       
+          <li><a href="#"onClick={() => logout()}>Log Out</a></li>       
         </ul>
       </nav>
       <main className="content-area">

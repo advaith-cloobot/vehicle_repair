@@ -46,7 +46,7 @@ const InvoiceList = () => {
 
   const handleInvoiceClick = (id) => {
     console.log("Invoice ID : ",id);
-    navigate(`layout/invoice/${id}`);
+    navigate(`/layout/invoice/${id}`);
   };
 
   return (
@@ -59,7 +59,7 @@ const InvoiceList = () => {
             className="invoice-button"
             onClick={() => handleInvoiceClick(invoice.pi_id)}
           >
-            Invoice #{invoice.invoice_number}
+            Invoice #{index}
           </button>
         ))}
       </div>
