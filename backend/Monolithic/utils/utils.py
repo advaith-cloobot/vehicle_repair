@@ -22,9 +22,12 @@ def print_statement(*args):
 
 
 def check_login_user(user_email, user_password):
-    user_info = get_rows_by_col(PG_TABLE_IDS_USERS,opt_conds= " lower(" + pg_col_name_dict[PG_TABLE_IDS_USERS][3] + ") = '" + user_email.lower() + "' ")
+    user_info = get_rows_by_col(PG_TABLE_IDS_USERS,opt_conds= " lower(" + pg_col_name_dict[PG_TABLE_IDS_USERS][PG_TABLE_IDS_USERS_user_email] + ") = '" + user_email.lower() + "' ")
+    print_statement("user_info :: ",user_info)
     if len(user_info):
         row = user_info[0]
+        print_statement("password :: ",user_password," :: ",row[PG_TABLE_IDS_USERS_user_password])
+        print_statement(row[PG_TABLE_IDS_USERS_user_password] == user_password)
         if(row[PG_TABLE_IDS_USERS_user_password] == user_password):
             return True, row[PG_TABLE_IDS_USERS_user_id]
     return False, None
@@ -37,11 +40,13 @@ def get_jwt_token(payload):
 
 
 def get_token(useremail, password):
-    # print("Entered Get Token")
-    user_info = get_rows_by_col(PG_TABLE_IDS_USERS,opt_conds= " lower(" + pg_col_name_dict[PG_TABLE_IDS_USERS][3] + ") = '" + useremail.lower() + "' ")
+    print("Entered Get Token")
+    user_info = get_rows_by_col(PG_TABLE_IDS_USERS,opt_conds= " lower(" + pg_col_name_dict[PG_TABLE_IDS_USERS][2] + ") = '" + useremail.lower() + "' ")
+    print_statement("user_info :: ",user_info)
     if len(user_info):
         row = user_info[0]
-        # print("row ::", row)
+        print("row ::", row)
+        print("compare :: ",row[PG_TABLE_IDS_USERS_user_password] == password)
         if(row[PG_TABLE_IDS_USERS_user_password] == password):
 
             payload = {
@@ -62,7 +67,7 @@ def get_token(useremail, password):
                 # return {"data":encoded.decode("UTF-8"),"user_id":row[0],"auth_level":row[5],"status":status,"user_name":user_info[0][pg_users_index_user_name],'org_name':org_info[pg_org_index_org_name],'org_id':org_info[pg_org_index_org_id],'bot_type':bot_type,'time_zone':org_info[pg_org_index_org_time_zone],"user_phone":user_info[0][pg_users_index_user_phone]}
                 # print("\n\ntoken :: ",encoded)
                 # Check conversation if available else create new conversation
-
+                print_statement("User Logged In :: ",encoded, " :: user name :: ",user_name)
                 return {"data":encoded,"user_id":row[0],"status":True,"user_name":row[PG_TABLE_IDS_USERS_user_name],"user_mail":row[PG_TABLE_IDS_USERS_user_email],"secret":hashed_pwd,"message":"User Logged In"}
         else:
             {"data":False,"message":"Password does not match"}

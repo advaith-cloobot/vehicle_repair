@@ -1,12 +1,6 @@
 import React , { useState,useEffect }  from "react";
 import { useNavigate } from "react-router-dom";
-// import template from "./login.jsx";
-
-// class login extends React.Component {
-//   render() {
-//     return template.call(this);
-//   }
-// }
+import httpClient from "../../httpClient";
 
 
 
@@ -19,9 +13,33 @@ const Login = () => {
     check_login(email, password);
   };
 
-  function check_login(user_email,user_password) {
-    console.log(user_email)
-    navigate("/layout/home");
+  function check_login() {
+    // navigate("/layout/home");
+    const data = {
+      user_email: email,
+      user_password: password
+    }
+    httpClient.post('/check_login', data)
+      .then((response) => {
+        console.log(response.data)
+        console.log('response login : ', response);
+        const data = response.data;
+        console.log("\n\ndata login :: ",data);
+        if (data.status) {
+          sessionStorage.setItem('token', data.data);
+          sessionStorage.setItem('user_id', data.user_id);
+          sessionStorage.setItem('user_name', data.user_name);
+          navigate("/layout/home");
+        }
+        else{
+          alert("Invalid Email or Password");
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+
   }
 
 

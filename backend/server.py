@@ -42,6 +42,7 @@ def check_login():
         user_email = request.json['user_email']
         user_password = request.json['user_password']
         status,user_id = check_login_user(user_email,user_password)
+        print('status :: ',status)
         if status:
             return get_token(user_email,user_password)
         return {"status":False,"user_id":None}
