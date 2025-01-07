@@ -1,0 +1,64 @@
+.home-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .title-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .title-section h1 {
+    margin: 0 10px;
+    font-size: 32px;
+    font-weight: bold;
+    color: blue;
+  }
+  
+  .tire-icon {
+    font-size: 48px;
+  }
+  
+  .description-section {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .how-to-use-section {
+    text-align: left;
+  }
+  
+  .how-to-use-section h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .how-to-use-section ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .how-to-use-section li {
+    margin: 10px 0;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .rotating-tire-icon {
+    margin-right: 10px;
+    font-size: 24px;
+    animation: rotate 2s linear infinite;
+  }
+  
+  @keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
