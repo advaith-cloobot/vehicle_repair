@@ -5,6 +5,7 @@ import Login from './components/login/login';
 import Home from './components/home/home'; // Child of Layout
 import CarDetails from './components/car_details/car_details';
 import Invoice from './components/invoice/invoice';
+import InvoiceList from './components/invoice_list/invoice_list';
 function App() {
   return (
     <Router>
@@ -16,6 +17,7 @@ function App() {
           <Route path="home" element={<Home />} />
           <Route path="car_details" element={<CarDetails />} />
           <Route path="invoice/:id" element={<Invoice />} />
+          <Route path="list_invoice" element={<InvoiceList />} />
         </Route>
       </Routes>
     </Router>
